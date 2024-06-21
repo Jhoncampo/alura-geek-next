@@ -1,0 +1,1 @@
+export const api:string = "https://alura-geek-api-red.vercel.app/"
