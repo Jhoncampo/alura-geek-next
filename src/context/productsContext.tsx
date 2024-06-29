@@ -1,8 +1,8 @@
+"use client"
 import { getCategories } from "@/services/categories";
 import { getProducts } from "@/services/products";
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
-// Define las interfaces para los productos y categorías
 interface Product {
     id: string;
     nombreProducto: string;
@@ -17,7 +17,6 @@ interface Category {
     nombre: string;
 }
 
-// Define la estructura del contexto
 interface ProductsContextType {
     products: Product[];
     categories: Category[];
@@ -25,7 +24,6 @@ interface ProductsContextType {
     error: Error | null;
 }
 
-// Crea el contexto con el tipo definido
 const ProductsContext = createContext<ProductsContextType | undefined>(undefined);
 
 export const ProductsProvider = ({ children }: { children: ReactNode }) => {
@@ -57,7 +55,6 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
     );
 };
 
-// Hook personalizado para usar el contexto
 export const useProductsContext = () => {
     const context = useContext(ProductsContext);
     if (context === undefined) {
