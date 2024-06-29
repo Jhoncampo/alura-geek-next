@@ -1,23 +1,50 @@
+"use client"
 import { useProductsContext } from "@/context/productsContext";
+import { FaArrowRight } from "react-icons/fa";
 import Link from "next/link";
-interface InterSectionCategory {
-    products?: Array<string>;
-    title: string;
-    href: string;
-}
+import CardProduct from "./CardProduct";
 
-const SectionCategory = ({ title, href }: InterSectionCategory) => {
-    const { products } = useProductsContext()
-    console.log("Hola-- ",products)
+const SectionCategory = () => {
+    const { products, categories } = useProductsContext();
     return (
-        <section className="mx-auto max-w-[1100px]">
-            <div>
-                <h3>{title}</h3>
-                <Link href={href}>Ver todo</Link>
-            </div>
-            <div>
-
-            </div>
+        <section className="mx-auto max-w-[1100px] px-4">
+            {categories.map((category) => (
+                <div key={category.id}>
+                    <div className="flex items-center justify-between py-4  ">
+                        <h3 className="text-2xl font-bold capitalize">
+                            {category.categoria}
+                        </h3>
+                        <div className="flex items-center gap-2 text-[#2A7AE4]">
+                            <Link
+                                className="font-bold"
+                                href={category.categoria}
+                            >
+                                Ver todo
+                            </Link>
+                            <FaArrowRight />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-gridProduct gap-4 ">
+                        {products
+                            .filter(
+                                (pro) =>
+                                    pro.categoria
+                                        .replace(" ", "")
+                                        .toLocaleLowerCase() ===
+                                    category.categoria
+                            )
+                            .map((prod) => (
+                                <CardProduct
+                                    key={prod.id}
+                                    nameProduct={prod.nombreProducto}
+                                    img={prod.imagen}
+                                    price={prod.precio}
+                                    href={prod.id}
+                                />
+                            ))}
+                    </div>
+                </div>
+            ))}
         </section>
     );
 };
